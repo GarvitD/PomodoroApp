@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyProfile_Activity">
+
+    <RelativeLayout
+        android:id="@+id/notSignedIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/info_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Login to see your progress and compete with other enthusiasts out there"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:translationY="20dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/googleSignIn"
+            android:layout_width="300dp"
+            android:layout_height="44dp"
+            android:layout_below="@id/info_txt"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/google_logo"
+            android:elevation="100dp"
+            android:fontFamily="sans-serif"
+            android:paddingStart="25dp"
+            android:text="     Sign in with Google"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="#2b2a2a"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/facebookSignIn"
+            android:layout_width="300dp"
+            android:layout_height="44dp"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#4267B2"
+            android:elevation="100dp"
+            android:text="     Sign in with Facebook"
+            android:textAlignment="textStart"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:drawableLeft="@drawable/facebook_icon"
+            android:paddingLeft="25dp"
+            android:layout_below="@id/googleSignIn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Signed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/default_profile_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/profileImage"
+            android:text="name"
+            android:layout_marginTop="15dp"
+            android:textSize="25sp"/>
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            android:layout_below="@id/profileName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

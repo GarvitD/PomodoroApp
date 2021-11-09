@@ -94,6 +94,41 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/notifications"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/bell_ring"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/music_options"
+            app:layout_constraintHorizontal_bias="0.825"
+            app:layout_constraintStart_toEndOf="@+id/nav_drawer_open"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333" />
+
+        <ImageView
+            android:id="@+id/music_options"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/music_note"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/profile_image"
+            app:layout_constraintHorizontal_bias="0.863"
+            app:layout_constraintStart_toEndOf="@+id/nav_drawer_open"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/default_profile_image"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toEndOf="@+id/nav_drawer_open"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.34" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
