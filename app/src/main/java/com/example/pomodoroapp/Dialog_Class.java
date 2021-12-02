@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import java.util.Calendar;
 
 public class Dialog_Class extends AppCompatDialogFragment {
 
@@ -44,6 +47,7 @@ public class Dialog_Class extends AppCompatDialogFragment {
                         String time = editTextTime.getHour() + " : " + editTextTime.getMinute();
 
                         listener.applyTexts(name,time);
+                        listener.setAlarms(editTextTime.getHour(),editTextTime.getMinute());
                     }
                 });
 
@@ -66,5 +70,6 @@ public class Dialog_Class extends AppCompatDialogFragment {
 
     public interface DialogListener {
         void applyTexts(String TaskName, String TaskTime);
+        void setAlarms(int Hour,int Minute);
     }
 }

@@ -19,8 +19,10 @@
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/gradient_background9.xml" value="0.1" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1824074074074074" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/leaderboard_recycler_sample.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/rounded_corners.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/drawable/timer_progress_bar.xml" value="0.1" />
+        <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_leader_board.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_my_profile.xml" value="0.22" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_notifications.xml" value="0.17552083333333332" />
@@ -29,10 +31,11 @@
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/activity_timer.xml" value="0.22" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/dialog_task.xml" value="0.22" />
+        <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/leaderboard_sample.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/mainactivity_nav_header.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/onboarding_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/onboarding_viewpager_layout.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/tasks_sample.xml" value="0.22" />
+        <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/layout/tasks_sample.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/garvi/AndroidStudioProjects/PomodoroApp/app/src/main/res/menu/mainactivity_nav_menu.xml" value="0.17552083333333332" />
       </map>
     </option>

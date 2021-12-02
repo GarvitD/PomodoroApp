@@ -8,7 +8,7 @@
     android:layout_marginBottom="17dp">
 
     <TextView
-        android:id="@+id/sampleTaskText"
+        android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sample"
@@ -19,10 +19,10 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/sampleTaskTime"
+        android:id="@+id/userStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"

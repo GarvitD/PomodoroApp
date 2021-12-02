@@ -38,6 +38,12 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 
@@ -47,6 +53,7 @@ public class MyProfile_Activity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
     CallbackManager callbackManager;
+    DatabaseReference myDbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,7 @@ public class MyProfile_Activity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
+        myDbReference = FirebaseDatabase.getInstance().getReference("Users");
 
         if(mAuth.getCurrentUser() == null) binding.notSignedIn.setVisibility(View.VISIBLE);
         else {
@@ -101,6 +109,36 @@ public class MyProfile_Activity extends AppCompatActivity {
                 .centerCrop()
                 .placeholder(R.drawable.default_profile_image)
                 .into(binding.profileImage);
+
+
+        String email = mAuth.getCurrentUser().getEmail();
+        String[] split = email.split(".com");
+        email = split[0];
+
+        String finalEmail = email;
+        myDbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+
+                        String mail = userModel.getEmail();
+                        if(mail.equalsIgnoreCase(finalEmail)){
+                            binding.pomodorosCompleted.setText(String.valueOf(userModel.getPomodoros()));
+                            binding.focusTime.setText(String.valueOf(userModel.getTime()) + "\nMins");
+                            binding.progressBar2.setVisibility(View.GONE);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void facebookSignIn() {

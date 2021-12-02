@@ -1,21 +1,38 @@
 package com.example.pomodoroapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.pomodoroapp.databinding.ActivityTimerBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.security.PrivilegedAction;
 
 public class TimerActivity extends AppCompatActivity {
 
-    private long START_TIME_IN_MILLIS;
+    private int START_TIME_IN_MILLIS;
 
     private int currentProgress=0;
     private boolean timerRunning = true;
@@ -27,6 +44,10 @@ public class TimerActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     ActivityTimerBinding binding;
     MediaPlayer mediaPlayer;
+    FirebaseAuth mAuth;
+    DatabaseReference myDbReference;
+    private int time;
+    private int pomodoros = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +55,15 @@ public class TimerActivity extends AppCompatActivity {
         binding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        mAuth = FirebaseAuth.getInstance();
+        myDbReference = FirebaseDatabase.getInstance().getReference("Users");
+
+
         Intent intent = getIntent();
         timeLeftInMillis = intent.getIntExtra("duration",0);
         position = intent.getIntExtra("music_position",0);
-        START_TIME_IN_MILLIS = timeLeftInMillis/(60*1000);
+        START_TIME_IN_MILLIS = (int) (timeLeftInMillis/(60*1000));
+        time = START_TIME_IN_MILLIS;
 
         if(position!=0) {
             mediaPlayer = MediaPlayer.create(TimerActivity.this,musics[position-1]);
@@ -75,7 +101,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMillis ,1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillis/1000 ,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
@@ -99,6 +125,13 @@ public class TimerActivity extends AppCompatActivity {
                 timerRunning = false;
                 binding.celebrateAnimation.setVisibility(View.VISIBLE);
                 binding.celebrateAnimation.playAnimation();
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                if(mAuth.getCurrentUser()==null){
+                    displayAlertDialog();
+                } else {
+                    incrementPomodoros();
+                }
             }
         };
 
@@ -107,6 +140,65 @@ public class TimerActivity extends AppCompatActivity {
         binding.pauseBtn.setVisibility(View.VISIBLE);
         binding.resumeBtn.setVisibility(View.GONE);
         binding.stopBtn.setVisibility(View.GONE);
+    }
+
+    private void incrementPomodoros() {
+        String email = mAuth.getCurrentUser().getEmail();
+        String[] split = email.split(".com");
+        email = split[0];
+
+        String finalEmail = email;
+        myDbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+
+                        String mail = userModel.getEmail();
+                        if(mail.equalsIgnoreCase(finalEmail)){
+                            time += userModel.getTime();
+                            pomodoros += userModel.getPomodoros() + 1;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                UserModel user = new UserModel(finalEmail,pomodoros, time);
+                myDbReference.child(finalEmail).setValue(user);
+            }
+        }, 3000);
+
+    }
+
+    private void displayAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("User not Signed In")
+                .setMessage("Do you want to SignIn ?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(TimerActivity.this,MyProfile_Activity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.create().show();
     }
 
     private void updateCountdown() {

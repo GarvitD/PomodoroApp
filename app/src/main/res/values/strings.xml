@@ -3,4 +3,5 @@
     <string name="facebook_app_id">906713410224561</string>
     <string name="fb_login_protocol_scheme">fb906713410224561</string>
     <string name="sp_tasks">shared preference tasks</string>
+    <string name="pomodoros_done">pomodoros_done</string>
 </resources>
