@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.pomodoroapp.adapters.LeaderBoardAdapter;
 import com.example.pomodoroapp.databinding.ActivityLeaderBoardBinding;
+import com.example.pomodoroapp.models.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

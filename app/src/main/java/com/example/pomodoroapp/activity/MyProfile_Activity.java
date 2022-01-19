@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -17,7 +17,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.databinding.ActivityMyProfileBinding;
+import com.example.pomodoroapp.models.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -31,7 +33,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -42,7 +43,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
@@ -95,7 +95,7 @@ public class MyProfile_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Intent intent = new Intent(MyProfile_Activity.this,MainActivity.class);
+                Intent intent = new Intent(MyProfile_Activity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

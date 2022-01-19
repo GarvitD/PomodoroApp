@@ -1,34 +1,33 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
-import android.app.DownloadManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.databinding.ActivityTimerBinding;
+import com.example.pomodoroapp.models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.security.PrivilegedAction;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -39,6 +38,7 @@ public class TimerActivity extends AppCompatActivity {
     private long timeLeftInMillis ;
     private long ticks=0;
     private int position;
+    private int restTime;
     private int[] musics = {R.raw.acoustic_guitars,R.raw.cancion_triste,R.raw.cinematic_fairy_tale,R.raw.folk_instrumental,R.raw.in_the_forest_ambient,R.raw.melody_of_nature};
 
     CountDownTimer countDownTimer;
@@ -58,12 +58,13 @@ public class TimerActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         myDbReference = FirebaseDatabase.getInstance().getReference("Users");
 
-
         Intent intent = getIntent();
         timeLeftInMillis = intent.getIntExtra("duration",0);
         position = intent.getIntExtra("music_position",0);
         START_TIME_IN_MILLIS = (int) (timeLeftInMillis/(60*1000));
         time = START_TIME_IN_MILLIS;
+
+        buildNotiChannel();
 
         if(position!=0) {
             mediaPlayer = MediaPlayer.create(TimerActivity.this,musics[position-1]);
@@ -100,8 +101,16 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
+    private void buildNotiChannel() {
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel("Rest over Channel","RestOverNoti", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+        }
+    }
+
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMillis/1000 ,1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillis,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
@@ -132,6 +141,30 @@ public class TimerActivity extends AppCompatActivity {
                 } else {
                     incrementPomodoros();
                 }
+
+                if(START_TIME_IN_MILLIS==25) restTime = 5*60*1000;
+                else if(START_TIME_IN_MILLIS==45) restTime = 15*60*1000;
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(TimerActivity.this, MainActivity.class);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(TimerActivity.this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        // send notification after required time
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(TimerActivity.this,"Rest over Channel");
+                        builder.setContentTitle("Time Over");
+                        builder.setAutoCancel(true);
+                        builder.setContentText("Hey!Your Rest Time is Over, Start Working Again!!");
+                        builder.setSmallIcon(R.drawable.google_icon);
+                        builder.setContentIntent(pendingIntent);
+
+                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(TimerActivity.this);
+                        managerCompat.notify(1,builder.build());
+                    }
+                },restTime);
             }
         };
 
@@ -188,7 +221,7 @@ public class TimerActivity extends AppCompatActivity {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(TimerActivity.this,MyProfile_Activity.class);
+                        Intent intent = new Intent(TimerActivity.this, MyProfile_Activity.class);
                         startActivity(intent);
                     }
                 })

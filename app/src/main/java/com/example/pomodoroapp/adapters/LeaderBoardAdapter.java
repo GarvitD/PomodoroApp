@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.models.UserModel;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.models;
 
 public class TasksModel {
     public String name;

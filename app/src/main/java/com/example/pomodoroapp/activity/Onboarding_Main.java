@@ -1,11 +1,15 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.adapters.OnBoardingViewPagerAdapter;
 import com.example.pomodoroapp.databinding.ActivityOnboardingMainBinding;
 
 public class Onboarding_Main extends AppCompatActivity {
@@ -22,6 +26,14 @@ public class Onboarding_Main extends AppCompatActivity {
         viewPagerAdapter = new OnBoardingViewPagerAdapter(this);
         binding.onboardingViewPager.setAdapter(viewPagerAdapter);
         binding.wormDotsIndicator.setViewPager(binding.onboardingViewPager);
+
+        binding.skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Onboarding_Main.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         binding.onboardingViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

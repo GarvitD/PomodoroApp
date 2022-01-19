@@ -3,23 +3,23 @@
 
     <item
         android:id="@+id/title1"
-        android:title="title1"
-        android:icon="@drawable/img"/>
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24" />
 
     <item
         android:id="@+id/title2"
-        android:title="title2"
-        android:icon="@drawable/img"/>
+        android:title="Schedule Your Day"
+        android:icon="@drawable/ic_baseline_add_alarm_24"/>
 
     <item
         android:id="@+id/title3"
-        android:title="title3"
-        android:icon="@drawable/img"/>
+        android:title="Get Some Motivation"
+        android:icon="@drawable/ic_baseline_add_reaction_24"/>
 
     <item
         android:id="@+id/title4"
-        android:title="title4"
-        android:icon="@drawable/img"/>
+        android:title="Log Out"
+        android:icon="@drawable/ic_baseline_login_24"/>
 
 
 </menu>

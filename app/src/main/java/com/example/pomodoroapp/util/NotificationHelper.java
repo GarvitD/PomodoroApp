@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.util;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+
+import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.activity.ScheduleYourDayActivity;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
@@ -41,7 +44,7 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotification() {
 
-        Intent openAct = new Intent(this,ScheduleYourDayActivity.class);
+        Intent openAct = new Intent(this, ScheduleYourDayActivity.class);
         PendingIntent openPending = PendingIntent.getActivity(this,1,openAct,PendingIntent.FLAG_UPDATE_CURRENT);
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Pomodoro App")

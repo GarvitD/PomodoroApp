@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Onboarding_Main"
+    tools:context=".activity.Onboarding_Main"
     android:background="@drawable/gradient_animation789"
     android:id="@+id/onboarding_layout">
 
@@ -17,12 +17,12 @@
         android:text="Skip"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/onboarding_FrameLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="@+id/onboarding_ViewPager"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01999998" />
+        app:layout_constraintVertical_bias="0.95" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/onboarding_ViewPager"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.90999997">
+        app:layout_constraintVertical_bias="0.83">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,11 +53,11 @@
                 android:id="@+id/worm_dots_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:dotsColor="@color/purple_700"
+                app:dotsColor="@color/black"
                 app:dotsCornerRadius="8dp"
                 app:dotsSize="16dp"
                 app:dotsSpacing="4dp"
-                app:dotsStrokeColor="@color/teal_200"
+                app:dotsStrokeColor="@color/black"
                 app:dotsStrokeWidth="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

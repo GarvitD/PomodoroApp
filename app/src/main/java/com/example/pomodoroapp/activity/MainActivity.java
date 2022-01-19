@@ -1,4 +1,4 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -11,12 +11,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-
-import java.nio.file.Files;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,MyProfile_Activity.class);
+                Intent intent = new Intent(MainActivity.this, MyProfile_Activity.class);
                 startActivity(intent);
             }
         });
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          binding.mins25.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(MainActivity.this,TimerActivity.class);
+                 Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                  intent.putExtra("duration",25*1000*60);
                  intent.putExtra("music_position",pos);
                  startActivity(intent);
@@ -126,6 +125,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.title1: {
+                // some code for new idea
+                break;
+            }
+            case R.id.title2: {
+                Intent intent = new Intent(MainActivity.this, ScheduleYourDayActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.title3: {
+                Intent intent = new Intent(MainActivity.this, QuotesActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.title4 : {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                break;
+            }
+        }
+        binding.drawerLayoutMainActivity.closeDrawer(GravityCompat.START);
         return true;
     }
 }

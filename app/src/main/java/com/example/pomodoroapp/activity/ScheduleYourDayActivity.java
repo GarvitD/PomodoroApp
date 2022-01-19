@@ -1,6 +1,5 @@
-package com.example.pomodoroapp;
+package com.example.pomodoroapp.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -9,18 +8,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pomodoroapp.util.Dialog_Class;
+import com.example.pomodoroapp.R;
+import com.example.pomodoroapp.util.TaskAlarmReceiver;
+import com.example.pomodoroapp.adapters.TasksAdapter;
 import com.example.pomodoroapp.databinding.ActivityScheduleYourDayBinding;
-import com.facebook.bolts.Task;
+import com.example.pomodoroapp.models.TasksModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -140,7 +138,7 @@ public class ScheduleYourDayActivity extends AppCompatActivity implements Dialog
         ed.apply();
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this,TaskAlarmReceiver.class);
+        Intent intent = new Intent(this, TaskAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,num,intent,0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
 
