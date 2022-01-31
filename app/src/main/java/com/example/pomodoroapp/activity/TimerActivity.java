@@ -251,4 +251,12 @@ public class TimerActivity extends AppCompatActivity {
         binding.resumeBtn.setVisibility(View.VISIBLE);
         binding.stopBtn.setVisibility(View.VISIBLE);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if(mediaPlayer != null) mediaPlayer.stop();
+        binding.timerProgress.setProgress(0);
+        super.onBackPressed();
+    }
 }

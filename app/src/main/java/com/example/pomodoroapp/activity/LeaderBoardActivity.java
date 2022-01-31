@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class LeaderBoardActivity extends AppCompatActivity {
@@ -45,6 +46,13 @@ public class LeaderBoardActivity extends AppCompatActivity {
                         UserModel user = dataSnapshot.getValue(UserModel.class);
                         userList.add(user);
                     }
+                    userList.sort(new Comparator<UserModel>() {
+                        @Override
+                        public int compare(UserModel userModel, UserModel t1) {
+                            if(userModel.getTime()>t1.getTime()) return 1;
+                            else return 0;
+                        }
+                    });
                     adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
                 }

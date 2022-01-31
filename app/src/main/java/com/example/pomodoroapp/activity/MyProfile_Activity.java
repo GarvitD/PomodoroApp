@@ -99,6 +99,14 @@ public class MyProfile_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.goToLeaderboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyProfile_Activity.this,LeaderBoardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void updateUI() {

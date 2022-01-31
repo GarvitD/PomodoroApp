@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mediaPlayer.stop();
+                if(mediaPlayer != null) mediaPlayer.stop();
                 dialog.dismiss();
             }
         });
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mediaPlayer.stop();
+                if(mediaPlayer != null) mediaPlayer.stop();
                 dialog.dismiss();
             }
         });
