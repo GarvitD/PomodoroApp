@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.pomodoroapp.adapters.LeaderBoardAdapter;
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -48,11 +50,15 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     }
                     userList.sort(new Comparator<UserModel>() {
                         @Override
-                        public int compare(UserModel userModel, UserModel t1) {
-                            if(userModel.getTime()>t1.getTime()) return 1;
+                        public int compare(UserModel t1, UserModel t2) {
+                            if(t1.getTime()>t2.getTime()) return -1;
+                            else if(t1.getTime()<t2.getTime()) return 1;
                             else return 0;
                         }
                     });
+                    for(int i=0;i<userList.size();i++) {
+                        Log.i("Pomo time "+ String.valueOf(i+1) + ": ", String.valueOf(userList.get(i).getTime()));
+                    }
                     adapter.notifyDataSetChanged();
                     binding.progressBar.setVisibility(View.GONE);
                 }

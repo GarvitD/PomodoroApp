@@ -12,12 +12,15 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.pomodoroapp.R;
 import com.example.pomodoroapp.databinding.ActivityTimerBinding;
@@ -27,7 +30,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -40,14 +46,18 @@ public class TimerActivity extends AppCompatActivity {
     private int position;
     private int restTime;
     private int[] musics = {R.raw.acoustic_guitars,R.raw.cancion_triste,R.raw.cinematic_fairy_tale,R.raw.folk_instrumental,R.raw.in_the_forest_ambient,R.raw.melody_of_nature};
+    private int time;
+    private int pomodoros = 0;
+    private Boolean musicPlaying = true;
+    private boolean takenToBackground = false;
 
     CountDownTimer countDownTimer;
     ActivityTimerBinding binding;
     MediaPlayer mediaPlayer;
     FirebaseAuth mAuth;
     DatabaseReference myDbReference;
-    private int time;
-    private int pomodoros = 0;
+    Uri customAudioUri;
+    String audioReceived;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +65,22 @@ public class TimerActivity extends AppCompatActivity {
         binding = ActivityTimerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if(musicPlaying) binding.musicBtn.setBackgroundResource(R.drawable.ic_baseline_pause_24);
+
         mAuth = FirebaseAuth.getInstance();
         myDbReference = FirebaseDatabase.getInstance().getReference("Users");
 
         Intent intent = getIntent();
         timeLeftInMillis = intent.getIntExtra("duration",0);
         position = intent.getIntExtra("music_position",0);
+
+        audioReceived = intent.getExtras().getString("customAudioUri","no_string");
+        customAudioUri = Uri.parse(audioReceived);
+
+        if(!(audioReceived.equalsIgnoreCase("no_string"))){
+            mediaPlayer = MediaPlayer.create(this,customAudioUri);
+            mediaPlayer.start();
+        }
         START_TIME_IN_MILLIS = (int) (timeLeftInMillis/(60*1000));
         time = START_TIME_IN_MILLIS;
 
@@ -97,9 +117,27 @@ public class TimerActivity extends AppCompatActivity {
                 pauseTimer();
                 binding.timerTimeLeft.setText(Long.toString(START_TIME_IN_MILLIS) +":00");
                 timeLeftInMillis = START_TIME_IN_MILLIS*60*1000;
+                Intent intent1 = new Intent(TimerActivity.this,MainActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        binding.musicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(musicPlaying) {
+                    binding.musicBtn.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
+                    musicPlaying = false;
+                    if(mediaPlayer != null) mediaPlayer.pause();
+                } else {
+                    binding.musicBtn.setBackgroundResource(R.drawable.ic_baseline_pause_24);
+                    musicPlaying = true;
+                    if(mediaPlayer!=null) mediaPlayer.start();
+                }
             }
         });
     }
+
 
     private void buildNotiChannel() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -113,6 +151,9 @@ public class TimerActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(timeLeftInMillis,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                if(!timerRunning) {
+                    cancel();
+                }
                 timeLeftInMillis = millisUntilFinished;
                 updateCountdown();
 
@@ -135,8 +176,10 @@ public class TimerActivity extends AppCompatActivity {
                 binding.celebrateAnimation.setVisibility(View.VISIBLE);
                 binding.celebrateAnimation.playAnimation();
 
+                Log.i("Pomodoro Test","method call");
+
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                if(mAuth.getCurrentUser()==null){
+                if(mAuth.getCurrentUser() == null){
                     displayAlertDialog();
                 } else {
                     incrementPomodoros();
@@ -158,7 +201,7 @@ public class TimerActivity extends AppCompatActivity {
                         builder.setContentTitle("Time Over");
                         builder.setAutoCancel(true);
                         builder.setContentText("Hey!Your Rest Time is Over, Start Working Again!!");
-                        builder.setSmallIcon(R.drawable.google_icon);
+                        builder.setSmallIcon(R.drawable.alarm_noti);
                         builder.setContentIntent(pendingIntent);
 
                         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(TimerActivity.this);
@@ -179,39 +222,23 @@ public class TimerActivity extends AppCompatActivity {
         String email = mAuth.getCurrentUser().getEmail();
         String[] split = email.split(".com");
         email = split[0];
-
         String finalEmail = email;
-        myDbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
 
-                        String mail = userModel.getEmail();
-                        if(mail.equalsIgnoreCase(finalEmail)){
-                            time += userModel.getTime();
-                            pomodoros += userModel.getPomodoros() + 1;
-                        }
-                    }
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Users");
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(finalEmail)) {
+                    UserModel model = snapshot.child(finalEmail).getValue(UserModel.class);
+                    UserModel user = new UserModel(finalEmail,model.getPomodoros()+1, model.getTime()+time);
+                    myDbReference.child(finalEmail).setValue(user);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                UserModel user = new UserModel(finalEmail,pomodoros, time);
-                myDbReference.child(finalEmail).setValue(user);
-            }
-        }, 3000);
-
     }
 
     private void displayAlertDialog() {
@@ -255,8 +282,46 @@ public class TimerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(mediaPlayer != null) mediaPlayer.stop();
-        binding.timerProgress.setProgress(0);
-        super.onBackPressed();
+        showExitAlert();
+    }
+
+    private void showExitAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Do you want to exit?");
+        builder.setMessage("You won't be able to resume again!");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(mediaPlayer != null) mediaPlayer.stop();
+                binding.timerProgress.setProgress(0);
+                Intent intent = new Intent(TimerActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    protected void onPause() {
+        if (mediaPlayer != null) mediaPlayer.pause();
+        timerRunning = false;
+        takenToBackground = true;
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (mediaPlayer != null) mediaPlayer.start();
+        if(takenToBackground){
+            takenToBackground =  false;
+            startTimer();
+        }
+        super.onResume();
     }
 }

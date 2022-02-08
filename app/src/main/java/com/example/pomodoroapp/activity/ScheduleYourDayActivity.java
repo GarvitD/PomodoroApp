@@ -104,7 +104,13 @@ public class ScheduleYourDayActivity extends AppCompatActivity implements Dialog
 
     @Override
     public void applyTexts(String TaskName, String TaskTime) {
-        TasksModel model = new TasksModel(TaskName,TaskTime);
+        SharedPreferences taskIdShared = getSharedPreferences("taskIdShared",MODE_PRIVATE);
+        SharedPreferences.Editor ed = taskIdShared.edit();
+        int num = taskIdShared.getInt("num",1);
+        ed.remove("num");
+        ed.apply();
+
+        TasksModel model = new TasksModel(TaskName,TaskTime,num);
         tasksList.add(model);
 
         SharedPreferences sharedPreferences = getSharedPreferences(String.valueOf(R.string.sp_tasks),MODE_PRIVATE);
@@ -115,6 +121,9 @@ public class ScheduleYourDayActivity extends AppCompatActivity implements Dialog
         editor.apply();
 
         updateRecylcer();
+
+        ed.putInt("num",num+1);
+        ed.apply();
     }
 
     @Override
@@ -131,18 +140,12 @@ public class ScheduleYourDayActivity extends AppCompatActivity implements Dialog
              calendar.add(Calendar.DATE,1);
         }
 
-        SharedPreferences sh = getSharedPreferences("Alarm num",MODE_PRIVATE);
-        SharedPreferences.Editor ed = sh.edit();
-        int num = sh.getInt("num",1);
-        ed.remove("num");
-        ed.apply();
+        SharedPreferences sh = getSharedPreferences("taskIdShared",MODE_PRIVATE);
+        int num = sh.getInt("num",1) - 1;
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, TaskAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,num,intent,0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-
-        ed.putInt("num",num+1);
-        ed.apply();
     }
 }
