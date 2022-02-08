@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PomodoroApp">
         <activity
+            android:name=".activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.QuotesActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
             android:name=".activity.Onboarding_Main"
             android:exported="true" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.WeeklyProgress"
             android:exported="true" />
         <activity
             android:name=".activity.SplashActivity"

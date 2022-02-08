@@ -124,29 +124,58 @@ public class MyProfile_Activity extends AppCompatActivity {
         email = split[0];
 
         String finalEmail = email;
-        myDbReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
 
-                        String mail = userModel.getEmail();
-                        if(mail.equalsIgnoreCase(finalEmail)){
-                            binding.pomodorosCompleted.setText(String.valueOf(userModel.getPomodoros()));
-                            binding.focusTime.setText(String.valueOf(userModel.getTime()) + "\nMins");
-                            binding.progressBar2.setVisibility(View.GONE);
-                            break;
-                        }
-                    }
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Users");
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(finalEmail)) {
+
+                    UserModel model = snapshot.child(finalEmail).getValue(UserModel.class);
+                    binding.pomodorosCompleted.setText(String.valueOf(model.getPomodoros()));
+                    binding.focusTime.setText(String.valueOf(model.getTime()) + "\nMins");
+                    binding.progressBar2.setVisibility(View.GONE);
+
+                    Log.i("Pomodoro Test",String.valueOf(model.getTime()));
+                } else {
+//                    UserModel user = new UserModel(finalEmail, 0, 0);
+//                    myDbReference.child(finalEmail).setValue(user);
+//                    binding.progressBar2.setVisibility(View.GONE);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+//        myDbReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if(snapshot.exists()){
+//                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+//
+//                        String mail = userModel.getEmail();
+//                        if(mail.equalsIgnoreCase(finalEmail)){
+//                            binding.pomodorosCompleted.setText(String.valueOf(userModel.getPomodoros()));
+//                            binding.focusTime.setText(String.valueOf(userModel.getTime()) + "\nMins");
+//                            binding.progressBar2.setVisibility(View.GONE);
+//                            break;
+//                        } else {
+//                            UserModel user = new UserModel(finalEmail,0, 0);
+//                            myDbReference.child(finalEmail).setValue(user);
+//                            binding.progressBar2.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                binding.progressBar2.setVisibility(View.GONE);
+//            }
+//        });
     }
 
     private void facebookSignIn() {

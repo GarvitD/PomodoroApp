@@ -33,7 +33,7 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     @Override
     public void onBindViewHolder(@NonNull LeaderBoardViewHolder holder, int position) {
         UserModel user = userList.get(position);
-        holder.userStats.setText(String.valueOf(user.getPomodoros()));
+        holder.userStats.setText(String.valueOf(user.getTime()));
 
         String email = user.getEmail();
         int pos=0;

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginBottom="17dp">
+    android:layout_marginBottom="17dp"
+    android:background="@color/greyish">
 
     <TextView
         android:id="@+id/userName"
@@ -13,26 +14,30 @@
         android:layout_height="wrap_content"
         android:text="Sample"
         android:textAlignment="textStart"
-        android:textSize="22sp"
+        android:textColor="@color/green"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/userStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
-        android:textSize="22sp"
+        android:textSize="27sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="290dp" />
+        android:layout_marginStart="290dp"
+        android:textColor="@color/green"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

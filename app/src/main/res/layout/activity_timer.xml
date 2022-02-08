@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_colour">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/celebrateAnimation"
@@ -33,12 +35,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="sample"
-        android:textColor="@color/black"
+        android:textColor="@color/green"
         android:textSize="55sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/timer_progress"
         app:layout_constraintEnd_toEndOf="@+id/timer_progress"
         app:layout_constraintStart_toStartOf="@+id/timer_progress"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pauseBtn"
@@ -48,7 +52,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_progress" />
+        app:layout_constraintTop_toBottomOf="@+id/timer_progress"
+        android:background="@color/red"
+        android:textColor="@color/greyish"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/resumeBtn"
@@ -61,7 +67,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_progress"
         app:layout_constraintVertical_bias="0.504"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:textColor="@color/greyish"
+        android:background="@color/green"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/stopBtn"
@@ -74,7 +82,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_progress"
         app:layout_constraintVertical_bias="0.504"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:background="@color/red"
+        android:textColor="@color/greyish"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:layout_width="190dp"
@@ -86,5 +96,18 @@
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/jellyfish_spin"
         app:lottie_loop="true"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/musicBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_baseline_pause_24"
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_time_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.266" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

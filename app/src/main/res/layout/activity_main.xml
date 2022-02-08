@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
-    android:id="@+id/drawerLayout_main_activity">
+    android:id="@+id/drawerLayout_main_activity"
+    android:background="#30384b">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pick Your Timer Duration"
-            android:textColor="@color/black"
+            android:textColor="@color/greyish"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="25:00"
-                android:textColor="@color/black"
+                android:textColor="@color/red"
                 android:textSize="85sp" />
 
             <TextView
@@ -63,6 +64,7 @@
                 android:layout_below="@id/mins_25"
                 android:layout_marginStart="80dp"
                 android:text="+ 5:00 Rest"
+                android:textColor="#05ec8b"
                 android:textSize="30sp" />
 
         </RelativeLayout>
@@ -81,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="45:00"
-                android:textColor="@color/black"
+                android:textColor="@color/red"
                 android:textSize="85sp" />
 
             <TextView
@@ -90,12 +92,13 @@
                 android:layout_below="@id/mins_45"
                 android:layout_marginStart="80dp"
                 android:text="+ 15:00 Rest"
+                android:textColor="@color/green"
                 android:textSize="30sp" />
 
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/notifications"
+            android:id="@+id/addCustomMusic"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/bell_ring"

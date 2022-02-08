@@ -4,4 +4,6 @@
     <string name="fb_login_protocol_scheme">fb906713410224561</string>
     <string name="sp_tasks">shared preference tasks</string>
     <string name="pomodoros_done">pomodoros_done</string>
+    <string name="dailyTimeSharedPreference">dailyTimeSharedPreference</string>
+    <string name="dailyTime">dailyTime</string>
 </resources>

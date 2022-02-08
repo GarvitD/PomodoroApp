@@ -45,17 +45,34 @@ public class Dialog_Class extends AppCompatDialogFragment {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String name = editTextTaskName.getText().toString();
-                        String time = editTextTime.getHour() + " : " + editTextTime.getMinute();
-
-                        listener.applyTexts(name,time);
-                        listener.setAlarms(editTextTime.getHour(),editTextTime.getMinute());
+                        // do nothing here and override it later
                     }
                 });
+        AlertDialog dialog =  builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = editTextTaskName.getText().toString();
+                if(name.isEmpty()) {
+                    editTextTaskName.setError("Please give a name to your task!");
+                    editTextTaskName.requestFocus();
+                } else {
+                    String time = check(editTextTime.getHour()) + " : " + check(editTextTime.getMinute());
 
+                    listener.applyTexts(name,time);
+                    listener.setAlarms(editTextTime.getHour(),editTextTime.getMinute());
+                    dialog.dismiss();
+                }
+            }
+        });
+        return dialog;
+    }
 
-
-        return builder.create();
+    private String check(int hour) {
+        String time = String.valueOf(hour);
+        if(time.length()<2) time = "0" + time;
+        return time;
     }
 
     @Override

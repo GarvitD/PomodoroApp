@@ -3,36 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginBottom="17dp">
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="17dp"
+    android:background="@color/greyish">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sampleTaskText"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.578"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        />
 
     <TextView
         android:id="@+id/sampleTaskText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Sample"
         android:textAlignment="textStart"
-        android:textSize="22sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.143"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        android:textColor="@color/green"/>
 
     <TextView
         android:id="@+id/sampleTaskTime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Time"
-        android:textSize="22sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/green"/>
+
+    <ImageButton
+        android:id="@+id/deleteTask"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintStart_toEndOf="@+id/sampleTaskTime"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="290dp" />
+        android:backgroundTint="@color/red"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

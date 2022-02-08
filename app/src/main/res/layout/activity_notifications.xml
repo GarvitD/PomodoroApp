@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Notifications_Activity">
+    tools:context=".activity.Notifications_Activity"
+    android:background="@color/bg_colour">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
